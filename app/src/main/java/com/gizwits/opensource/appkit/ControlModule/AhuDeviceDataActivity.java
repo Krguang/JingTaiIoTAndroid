@@ -66,7 +66,6 @@ public class AhuDeviceDataActivity extends GosControlModuleBaseActivity {
 
         /** 更新界面 */
         UPDATE_UI,
-
         DISCONNECT,
     }
 
