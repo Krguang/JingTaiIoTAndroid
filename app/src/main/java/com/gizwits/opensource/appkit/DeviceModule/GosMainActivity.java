@@ -320,12 +320,12 @@ public class GosMainActivity extends GosDeviceModuleBaseActivity implements Bott
             String doubleClick;
             if (!TextUtils.isEmpty(spf.getString("UserName", ""))
                     && !TextUtils.isEmpty(spf.getString("PassWord", ""))) {
-                doubleClick = (String) getText(R.string.doubleclick_logout);
+                doubleClick = (String) getText(R.string.double_click);
             } else {
                 if (getIntent().getBooleanExtra("ThredLogin", false)) {
-                    doubleClick = (String) getText(R.string.doubleclick_logout);
+                    doubleClick = (String) getText(R.string.double_click);
                 } else {
-                    doubleClick = (String) getText(R.string.doubleclick_back);
+                    doubleClick = (String) getText(R.string.double_click);
                 }
             }
 
@@ -339,7 +339,9 @@ public class GosMainActivity extends GosDeviceModuleBaseActivity implements Bott
             }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
         } else {
-            logoutToClean();
+            //logoutToClean();
+            this.finish();
+            System.exit(0);
         }
     }
 

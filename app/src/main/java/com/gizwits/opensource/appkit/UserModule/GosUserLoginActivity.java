@@ -395,6 +395,7 @@ public class GosUserLoginActivity extends com.gizwits.opensource.appkit.UserModu
                     intent = new Intent(GosUserLoginActivity.this, GosMainActivity.class);
                 }
                 startActivity(intent);
+                finish();
                 break;
             //login_anonymous-false-end
             //login_qq-false-start
@@ -565,6 +566,7 @@ public class GosUserLoginActivity extends com.gizwits.opensource.appkit.UserModu
             }
             intent.putExtra("ThredLogin", true);
             startActivity(intent);
+            finish();
         }
     }
 

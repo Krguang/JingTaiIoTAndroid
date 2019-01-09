@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,145 +13,62 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.enumration.GizWifiDeviceNetStatus;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.gizwits.opensource.appkit.CommonModule.GosDeploy;
 import com.gizwits.opensource.appkit.R;
-import com.gizwits.opensource.appkit.utils.HexStrUtils;
-import com.gizwits.opensource.appkit.view.HexWatcher;
 
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ *
+ */
 public class GosDeviceControlActivity extends GosControlModuleBaseActivity
-		implements OnClickListener, OnEditorActionListener, OnSeekBarChangeListener {
+		implements OnClickListener {
 
 	/** 设备列表传入的设备变量 */
 	private GizWifiDevice mDevice;
 
-	private Switch sw_bool_JK_1_fengJiYiQiDong;
-	private Switch sw_bool_JK_1_zhiBanStatus;
-	private Switch sw_bool_JK_1_dianJiaRe1;
-	private Switch sw_bool_JK_1_dianJiaRe2;
-	private Switch sw_bool_JK_1_dianJiaRe3;
-	private Switch sw_bool_JK_1_fengJiStatus;
-	private Switch sw_bool_JK_1_shouZiDong;
-	private Switch sw_bool_JK_1_dongXiaJi;
-	private Switch sw_bool_JK_1_zhongXiaoBaoJing;
-	private Switch sw_bool_JK_1_dianJiaReGaoWen;
-	private Switch sw_bool_JK_1_fengJiQueFeng;
-	private Switch sw_bool_JK_1_paiFengJiYiQiDong;
-	private Switch sw_bool_JK_1_diWenPanGuan;
-	private Switch sw_bool_JK_1_mieJunYunXing;
-	private Switch sw_bool_JK_2_fengJiYiQiDong;
-	private Switch sw_bool_JK_2_zhiBanStatus;
-	private Switch sw_bool_JK_2_dianJiaRe1;
-	private Switch sw_bool_JK_2_dianJiaRe2;
-	private Switch sw_bool_JK_2_dianJiaRe3;
-	private Switch sw_bool_JK_2_fengJiStatus;
-	private Switch sw_bool_JK_2_shouZiDong;
-	private Switch sw_bool_JK_2_dongXiaJi;
-	private Switch sw_bool_JK_2_zhongXiaoBaoJing;
-	private Switch sw_bool_JK_2_dianJiaReGaoWen;
-	private Switch sw_bool_JK_2_fengJiQueFeng;
-	private Switch sw_bool_JK_2_paiFengJiYiQiDong;
-	private Switch sw_bool_JK_2_diWenPanGuan;
-	private Switch sw_bool_JK_2_mieJunYunXing;
-	private Switch sw_bool_JK_3_fengJiYiQiDong;
-	private Switch sw_bool_JK_3_zhiBanStatus;
-	private Switch sw_bool_JK_3_dianJiaRe1;
-	private Switch sw_bool_JK_3_dianJiaRe2;
-	private Switch sw_bool_JK_3_dianJiaRe3;
-	private Switch sw_bool_JK_3_fengJiStatus;
-	private Switch sw_bool_JK_3_shouZiDong;
-	private Switch sw_bool_JK_3_dongXiaJi;
-	private Switch sw_bool_JK_3_zhongXiaoBaoJing;
-	private Switch sw_bool_JK_3_dianJiaReGaoWen;
-	private Switch sw_bool_JK_3_fengJiQueFeng;
-	private Switch sw_bool_JK_3_paiFengJiYiQiDong;
-	private Switch sw_bool_JK_3_diWenPanGuan;
-	private Switch sw_bool_JK_3_mieJunYunXing;
-	private Switch sw_bool_JK_XF_fengJiYiQiDong;
-	private Switch sw_bool_JK_XF_zhiBanStatus;
-	private Switch sw_bool_JK_XF_dianJiaRe1;
-	private Switch sw_bool_JK_XF_dianJiaRe2;
-	private Switch sw_bool_JK_XF_dianJiaRe3;
-	private Switch sw_bool_JK_XF_fengJiStatus;
-	private Switch sw_bool_JK_XF_shouZiDong;
-	private Switch sw_bool_JK_XF_dongXiaJi;
-	private Switch sw_bool_JK_XF_zhongXiaoBaoJing;
-	private Switch sw_bool_JK_XF_dianJiaReGaoWen;
-	private Switch sw_bool_JK_XF_fengJiQueFeng;
-	private Switch sw_bool_JK_XF_paiFengJiYiQiDong;
-	private Switch sw_bool_JK_XF_diWenPanGuan;
-	private Switch sw_bool_JK_XF_mieJunYunXing;
-	private TextView tv_data_JK_1_mianBanTongXunZhuangTai1;
-	private TextView tv_data_JK_1_mianBanTongXunZhuangTai2;
-	private TextView tv_data_JK_1_mianBanTongXunZhuangTai3;
-	private TextView tv_data_JK_2_mianBanTongXunZhuangTai1;
-	private TextView tv_data_JK_2_mianBanTongXunZhuangTai2;
-	private TextView tv_data_JK_2_mianBanTongXunZhuangTai3;
-	private TextView tv_data_JK_3_mianBanTongXunZhuangTai1;
-	private TextView tv_data_JK_3_mianBanTongXunZhuangTai2;
-	private TextView tv_data_JK_3_mianBanTongXunZhuangTai3;
-	private TextView tv_data_JK_XF_mianBanTongXunZhuangTai1;
-	private TextView tv_data_JK_XF_mianBanTongXunZhuangTai2;
-	private TextView tv_data_JK_XF_mianBanTongXunZhuangTai3;
+	private TextView tv_data_JK_1_title;
 	private TextView tv_data_JK_1_tempReal;
 	private TextView tv_data_JK_1_humiReal;
 	private TextView tv_data_JK_1_tempSet;
 	private TextView tv_data_JK_1_humiSet;
-	private TextView tv_data_JK_1_lengShuiFaKaiDu;
-	private TextView tv_data_JK_1_reShuiFaKaiDu;
-	private TextView tv_data_JK_1_xinFengWenDU;
-	private TextView tv_data_JK_1_jiaShiQIKaiDu;
-	private TextView tv_data_JK_1_beiYong;
+
+	private TextView tv_data_JK_2_title;
 	private TextView tv_data_JK_2_tempReal;
 	private TextView tv_data_JK_2_humiReal;
 	private TextView tv_data_JK_2_tempSet;
 	private TextView tv_data_JK_2_humiSet;
-	private TextView tv_data_JK_2_lengShuiFaKaiDu;
-	private TextView tv_data_JK_2_reShuiFaKaiDu;
-	private TextView tv_data_JK_2_xinFengWenDU;
-	private TextView tv_data_JK_2_jiaShiQIKaiDu;
-	private TextView tv_data_JK_2_beiYong;
+
+	private TextView tv_data_JK_3_title;
 	private TextView tv_data_JK_3_tempReal;
 	private TextView tv_data_JK_3_humiReal;
 	private TextView tv_data_JK_3_tempSet;
 	private TextView tv_data_JK_3_humiSet;
-	private TextView tv_data_JK_3_lengShuiFaKaiDu;
-	private TextView tv_data_JK_3_reShuiFaKaiDu;
-	private TextView tv_data_JK_3_xinFengWenDU;
-	private TextView tv_data_JK_3_jiaShiQIKaiDu;
-	private TextView tv_data_JK_3_beiYong;
+
+	private TextView tv_data_JK_XF_title;
 	private TextView tv_data_JK_XF_tempReal;
 	private TextView tv_data_JK_XF_humiReal;
 	private TextView tv_data_JK_XF_tempSet;
 	private TextView tv_data_JK_XF_humiSet;
-	private TextView tv_data_JK_XF_lengShuiFaKaiDu;
-	private TextView tv_data_JK_XF_reShuiFaKaiDu;
-	private TextView tv_data_JK_XF_xinFengWenDU;
-	private TextView tv_data_JK_XF_jiaShiQIKaiDu;
-	private TextView tv_data_JK_XF_beiYong;
+
+	private View ll_overview_JK_1;
+	private View ll_overview_JK_2;
+	private View ll_overview_JK_3;
+	private View ll_overview_JK_XF;
 
 	private enum handler_key {
 
@@ -190,7 +108,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_gos_device_control);
+		setContentView(R.layout.main_state);
 		initDevice();
 		setToolBar(true, getDeviceName());
 		final Drawable add = getResources().getDrawable(R.drawable.common_setting_more);
@@ -202,172 +120,44 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
 	}
 
 	private void initView() {
-		
-		sw_bool_JK_1_fengJiYiQiDong = (Switch) findViewById(R.id.sw_bool_JK_1_fengJiYiQiDong);
-		sw_bool_JK_1_zhiBanStatus = (Switch) findViewById(R.id.sw_bool_JK_1_zhiBanStatus);
-		sw_bool_JK_1_dianJiaRe1 = (Switch) findViewById(R.id.sw_bool_JK_1_dianJiaRe1);
-		sw_bool_JK_1_dianJiaRe2 = (Switch) findViewById(R.id.sw_bool_JK_1_dianJiaRe2);
-		sw_bool_JK_1_dianJiaRe3 = (Switch) findViewById(R.id.sw_bool_JK_1_dianJiaRe3);
-		sw_bool_JK_1_fengJiStatus = (Switch) findViewById(R.id.sw_bool_JK_1_fengJiStatus);
-		sw_bool_JK_1_shouZiDong = (Switch) findViewById(R.id.sw_bool_JK_1_shouZiDong);
-		sw_bool_JK_1_dongXiaJi = (Switch) findViewById(R.id.sw_bool_JK_1_dongXiaJi);
-		sw_bool_JK_1_zhongXiaoBaoJing = (Switch) findViewById(R.id.sw_bool_JK_1_zhongXiaoBaoJing);
-		sw_bool_JK_1_dianJiaReGaoWen = (Switch) findViewById(R.id.sw_bool_JK_1_dianJiaReGaoWen);
-		sw_bool_JK_1_fengJiQueFeng = (Switch) findViewById(R.id.sw_bool_JK_1_fengJiQueFeng);
-		sw_bool_JK_1_paiFengJiYiQiDong = (Switch) findViewById(R.id.sw_bool_JK_1_paiFengJiYiQiDong);
-		sw_bool_JK_1_diWenPanGuan = (Switch) findViewById(R.id.sw_bool_JK_1_diWenPanGuan);
-		sw_bool_JK_1_mieJunYunXing = (Switch) findViewById(R.id.sw_bool_JK_1_mieJunYunXing);
-		sw_bool_JK_2_fengJiYiQiDong = (Switch) findViewById(R.id.sw_bool_JK_2_fengJiYiQiDong);
-		sw_bool_JK_2_zhiBanStatus = (Switch) findViewById(R.id.sw_bool_JK_2_zhiBanStatus);
-		sw_bool_JK_2_dianJiaRe1 = (Switch) findViewById(R.id.sw_bool_JK_2_dianJiaRe1);
-		sw_bool_JK_2_dianJiaRe2 = (Switch) findViewById(R.id.sw_bool_JK_2_dianJiaRe2);
-		sw_bool_JK_2_dianJiaRe3 = (Switch) findViewById(R.id.sw_bool_JK_2_dianJiaRe3);
-		sw_bool_JK_2_fengJiStatus = (Switch) findViewById(R.id.sw_bool_JK_2_fengJiStatus);
-		sw_bool_JK_2_shouZiDong = (Switch) findViewById(R.id.sw_bool_JK_2_shouZiDong);
-		sw_bool_JK_2_dongXiaJi = (Switch) findViewById(R.id.sw_bool_JK_2_dongXiaJi);
-		sw_bool_JK_2_zhongXiaoBaoJing = (Switch) findViewById(R.id.sw_bool_JK_2_zhongXiaoBaoJing);
-		sw_bool_JK_2_dianJiaReGaoWen = (Switch) findViewById(R.id.sw_bool_JK_2_dianJiaReGaoWen);
-		sw_bool_JK_2_fengJiQueFeng = (Switch) findViewById(R.id.sw_bool_JK_2_fengJiQueFeng);
-		sw_bool_JK_2_paiFengJiYiQiDong = (Switch) findViewById(R.id.sw_bool_JK_2_paiFengJiYiQiDong);
-		sw_bool_JK_2_diWenPanGuan = (Switch) findViewById(R.id.sw_bool_JK_2_diWenPanGuan);
-		sw_bool_JK_2_mieJunYunXing = (Switch) findViewById(R.id.sw_bool_JK_2_mieJunYunXing);
-		sw_bool_JK_3_fengJiYiQiDong = (Switch) findViewById(R.id.sw_bool_JK_3_fengJiYiQiDong);
-		sw_bool_JK_3_zhiBanStatus = (Switch) findViewById(R.id.sw_bool_JK_3_zhiBanStatus);
-		sw_bool_JK_3_dianJiaRe1 = (Switch) findViewById(R.id.sw_bool_JK_3_dianJiaRe1);
-		sw_bool_JK_3_dianJiaRe2 = (Switch) findViewById(R.id.sw_bool_JK_3_dianJiaRe2);
-		sw_bool_JK_3_dianJiaRe3 = (Switch) findViewById(R.id.sw_bool_JK_3_dianJiaRe3);
-		sw_bool_JK_3_fengJiStatus = (Switch) findViewById(R.id.sw_bool_JK_3_fengJiStatus);
-		sw_bool_JK_3_shouZiDong = (Switch) findViewById(R.id.sw_bool_JK_3_shouZiDong);
-		sw_bool_JK_3_dongXiaJi = (Switch) findViewById(R.id.sw_bool_JK_3_dongXiaJi);
-		sw_bool_JK_3_zhongXiaoBaoJing = (Switch) findViewById(R.id.sw_bool_JK_3_zhongXiaoBaoJing);
-		sw_bool_JK_3_dianJiaReGaoWen = (Switch) findViewById(R.id.sw_bool_JK_3_dianJiaReGaoWen);
-		sw_bool_JK_3_fengJiQueFeng = (Switch) findViewById(R.id.sw_bool_JK_3_fengJiQueFeng);
-		sw_bool_JK_3_paiFengJiYiQiDong = (Switch) findViewById(R.id.sw_bool_JK_3_paiFengJiYiQiDong);
-		sw_bool_JK_3_diWenPanGuan = (Switch) findViewById(R.id.sw_bool_JK_3_diWenPanGuan);
-		sw_bool_JK_3_mieJunYunXing = (Switch) findViewById(R.id.sw_bool_JK_3_mieJunYunXing);
-		sw_bool_JK_XF_fengJiYiQiDong = (Switch) findViewById(R.id.sw_bool_JK_XF_fengJiYiQiDong);
-		sw_bool_JK_XF_zhiBanStatus = (Switch) findViewById(R.id.sw_bool_JK_XF_zhiBanStatus);
-		sw_bool_JK_XF_dianJiaRe1 = (Switch) findViewById(R.id.sw_bool_JK_XF_dianJiaRe1);
-		sw_bool_JK_XF_dianJiaRe2 = (Switch) findViewById(R.id.sw_bool_JK_XF_dianJiaRe2);
-		sw_bool_JK_XF_dianJiaRe3 = (Switch) findViewById(R.id.sw_bool_JK_XF_dianJiaRe3);
-		sw_bool_JK_XF_fengJiStatus = (Switch) findViewById(R.id.sw_bool_JK_XF_fengJiStatus);
-		sw_bool_JK_XF_shouZiDong = (Switch) findViewById(R.id.sw_bool_JK_XF_shouZiDong);
-		sw_bool_JK_XF_dongXiaJi = (Switch) findViewById(R.id.sw_bool_JK_XF_dongXiaJi);
-		sw_bool_JK_XF_zhongXiaoBaoJing = (Switch) findViewById(R.id.sw_bool_JK_XF_zhongXiaoBaoJing);
-		sw_bool_JK_XF_dianJiaReGaoWen = (Switch) findViewById(R.id.sw_bool_JK_XF_dianJiaReGaoWen);
-		sw_bool_JK_XF_fengJiQueFeng = (Switch) findViewById(R.id.sw_bool_JK_XF_fengJiQueFeng);
-		sw_bool_JK_XF_paiFengJiYiQiDong = (Switch) findViewById(R.id.sw_bool_JK_XF_paiFengJiYiQiDong);
-		sw_bool_JK_XF_diWenPanGuan = (Switch) findViewById(R.id.sw_bool_JK_XF_diWenPanGuan);
-		sw_bool_JK_XF_mieJunYunXing = (Switch) findViewById(R.id.sw_bool_JK_XF_mieJunYunXing);
-		tv_data_JK_1_mianBanTongXunZhuangTai1 = (TextView) findViewById(R.id.tv_data_JK_1_mianBanTongXunZhuangTai1);
-		tv_data_JK_1_mianBanTongXunZhuangTai2 = (TextView) findViewById(R.id.tv_data_JK_1_mianBanTongXunZhuangTai2);
-		tv_data_JK_1_mianBanTongXunZhuangTai3 = (TextView) findViewById(R.id.tv_data_JK_1_mianBanTongXunZhuangTai3);
-		tv_data_JK_2_mianBanTongXunZhuangTai1 = (TextView) findViewById(R.id.tv_data_JK_2_mianBanTongXunZhuangTai1);
-		tv_data_JK_2_mianBanTongXunZhuangTai2 = (TextView) findViewById(R.id.tv_data_JK_2_mianBanTongXunZhuangTai2);
-		tv_data_JK_2_mianBanTongXunZhuangTai3 = (TextView) findViewById(R.id.tv_data_JK_2_mianBanTongXunZhuangTai3);
-		tv_data_JK_3_mianBanTongXunZhuangTai1 = (TextView) findViewById(R.id.tv_data_JK_3_mianBanTongXunZhuangTai1);
-		tv_data_JK_3_mianBanTongXunZhuangTai2 = (TextView) findViewById(R.id.tv_data_JK_3_mianBanTongXunZhuangTai2);
-		tv_data_JK_3_mianBanTongXunZhuangTai3 = (TextView) findViewById(R.id.tv_data_JK_3_mianBanTongXunZhuangTai3);
-		tv_data_JK_XF_mianBanTongXunZhuangTai1 = (TextView) findViewById(R.id.tv_data_JK_XF_mianBanTongXunZhuangTai1);
-		tv_data_JK_XF_mianBanTongXunZhuangTai2 = (TextView) findViewById(R.id.tv_data_JK_XF_mianBanTongXunZhuangTai2);
-		tv_data_JK_XF_mianBanTongXunZhuangTai3 = (TextView) findViewById(R.id.tv_data_JK_XF_mianBanTongXunZhuangTai3);
-		tv_data_JK_1_tempReal = (TextView) findViewById(R.id.tv_data_JK_1_tempReal);
-		tv_data_JK_1_humiReal = (TextView) findViewById(R.id.tv_data_JK_1_humiReal);
-		tv_data_JK_1_tempSet = (TextView) findViewById(R.id.tv_data_JK_1_tempSet);
-		tv_data_JK_1_humiSet = (TextView) findViewById(R.id.tv_data_JK_1_humiSet);
-		tv_data_JK_1_lengShuiFaKaiDu = (TextView) findViewById(R.id.tv_data_JK_1_lengShuiFaKaiDu);
-		tv_data_JK_1_reShuiFaKaiDu = (TextView) findViewById(R.id.tv_data_JK_1_reShuiFaKaiDu);
-		tv_data_JK_1_xinFengWenDU = (TextView) findViewById(R.id.tv_data_JK_1_xinFengWenDU);
-		tv_data_JK_1_jiaShiQIKaiDu = (TextView) findViewById(R.id.tv_data_JK_1_jiaShiQIKaiDu);
-		tv_data_JK_1_beiYong = (TextView) findViewById(R.id.tv_data_JK_1_beiYong);
-		tv_data_JK_2_tempReal = (TextView) findViewById(R.id.tv_data_JK_2_tempReal);
-		tv_data_JK_2_humiReal = (TextView) findViewById(R.id.tv_data_JK_2_humiReal);
-		tv_data_JK_2_tempSet = (TextView) findViewById(R.id.tv_data_JK_2_tempSet);
-		tv_data_JK_2_humiSet = (TextView) findViewById(R.id.tv_data_JK_2_humiSet);
-		tv_data_JK_2_lengShuiFaKaiDu = (TextView) findViewById(R.id.tv_data_JK_2_lengShuiFaKaiDu);
-		tv_data_JK_2_reShuiFaKaiDu = (TextView) findViewById(R.id.tv_data_JK_2_reShuiFaKaiDu);
-		tv_data_JK_2_xinFengWenDU = (TextView) findViewById(R.id.tv_data_JK_2_xinFengWenDU);
-		tv_data_JK_2_jiaShiQIKaiDu = (TextView) findViewById(R.id.tv_data_JK_2_jiaShiQIKaiDu);
-		tv_data_JK_2_beiYong = (TextView) findViewById(R.id.tv_data_JK_2_beiYong);
-		tv_data_JK_3_tempReal = (TextView) findViewById(R.id.tv_data_JK_3_tempReal);
-		tv_data_JK_3_humiReal = (TextView) findViewById(R.id.tv_data_JK_3_humiReal);
-		tv_data_JK_3_tempSet = (TextView) findViewById(R.id.tv_data_JK_3_tempSet);
-		tv_data_JK_3_humiSet = (TextView) findViewById(R.id.tv_data_JK_3_humiSet);
-		tv_data_JK_3_lengShuiFaKaiDu = (TextView) findViewById(R.id.tv_data_JK_3_lengShuiFaKaiDu);
-		tv_data_JK_3_reShuiFaKaiDu = (TextView) findViewById(R.id.tv_data_JK_3_reShuiFaKaiDu);
-		tv_data_JK_3_xinFengWenDU = (TextView) findViewById(R.id.tv_data_JK_3_xinFengWenDU);
-		tv_data_JK_3_jiaShiQIKaiDu = (TextView) findViewById(R.id.tv_data_JK_3_jiaShiQIKaiDu);
-		tv_data_JK_3_beiYong = (TextView) findViewById(R.id.tv_data_JK_3_beiYong);
-		tv_data_JK_XF_tempReal = (TextView) findViewById(R.id.tv_data_JK_XF_tempReal);
-		tv_data_JK_XF_humiReal = (TextView) findViewById(R.id.tv_data_JK_XF_humiReal);
-		tv_data_JK_XF_tempSet = (TextView) findViewById(R.id.tv_data_JK_XF_tempSet);
-		tv_data_JK_XF_humiSet = (TextView) findViewById(R.id.tv_data_JK_XF_humiSet);
-		tv_data_JK_XF_lengShuiFaKaiDu = (TextView) findViewById(R.id.tv_data_JK_XF_lengShuiFaKaiDu);
-		tv_data_JK_XF_reShuiFaKaiDu = (TextView) findViewById(R.id.tv_data_JK_XF_reShuiFaKaiDu);
-		tv_data_JK_XF_xinFengWenDU = (TextView) findViewById(R.id.tv_data_JK_XF_xinFengWenDU);
-		tv_data_JK_XF_jiaShiQIKaiDu = (TextView) findViewById(R.id.tv_data_JK_XF_jiaShiQIKaiDu);
-		tv_data_JK_XF_beiYong = (TextView) findViewById(R.id.tv_data_JK_XF_beiYong);
+
+		tv_data_JK_1_title = (TextView) findViewById(R.id.tv_main_state_title_JK_1);
+		tv_data_JK_1_tempReal = (TextView) findViewById(R.id.tv_main_state_tempnow_JK_1);
+		tv_data_JK_1_humiReal = (TextView) findViewById(R.id.tv_main_state_huminow_JK_1);
+		tv_data_JK_1_tempSet = (TextView) findViewById(R.id.tv_main_state_tempset_JK_1);
+		tv_data_JK_1_humiSet = (TextView) findViewById(R.id.tv_main_state_humiset_JK_1);
+
+		tv_data_JK_2_title = (TextView) findViewById(R.id.tv_main_state_title_JK_2);
+		tv_data_JK_2_tempReal = (TextView) findViewById(R.id.tv_main_state_tempnow_JK_2);
+		tv_data_JK_2_humiReal = (TextView) findViewById(R.id.tv_main_state_huminow_JK_2);
+		tv_data_JK_2_tempSet = (TextView) findViewById(R.id.tv_main_state_tempset_JK_2);
+		tv_data_JK_2_humiSet = (TextView) findViewById(R.id.tv_main_state_humiset_JK_2);
+
+		tv_data_JK_3_title = (TextView) findViewById(R.id.tv_main_state_title_JK_3);
+		tv_data_JK_3_tempReal = (TextView) findViewById(R.id.tv_main_state_tempnow_JK_3);
+		tv_data_JK_3_humiReal = (TextView) findViewById(R.id.tv_main_state_huminow_JK_3);
+		tv_data_JK_3_tempSet = (TextView) findViewById(R.id.tv_main_state_tempset_JK_3);
+		tv_data_JK_3_humiSet = (TextView) findViewById(R.id.tv_main_state_humiset_JK_3);
+
+		tv_data_JK_XF_title = (TextView) findViewById(R.id.tv_main_state_title_JK_XF);
+		tv_data_JK_XF_tempReal = (TextView) findViewById(R.id.tv_main_state_tempnow_JK_XF);
+		tv_data_JK_XF_humiReal = (TextView) findViewById(R.id.tv_main_state_huminow_JK_XF);
+		tv_data_JK_XF_tempSet = (TextView) findViewById(R.id.tv_main_state_tempset_JK_XF);
+		tv_data_JK_XF_humiSet = (TextView) findViewById(R.id.tv_main_state_humiset_JK_XF);
+
+
+		ll_overview_JK_1 = findViewById(R.id.ll_JK_1);
+		ll_overview_JK_2 = findViewById(R.id.ll_JK_2);
+		ll_overview_JK_3 = findViewById(R.id.ll_JK_3);
+		ll_overview_JK_XF = findViewById(R.id.ll_JK_XF);
 	}
 
 	private void initEvent() {
 
-		sw_bool_JK_1_fengJiYiQiDong.setEnabled(false);
-		sw_bool_JK_1_zhiBanStatus.setEnabled(false);
-		sw_bool_JK_1_dianJiaRe1.setEnabled(false);
-		sw_bool_JK_1_dianJiaRe2.setEnabled(false);
-		sw_bool_JK_1_dianJiaRe3.setEnabled(false);
-		sw_bool_JK_1_fengJiStatus.setEnabled(false);
-		sw_bool_JK_1_shouZiDong.setEnabled(false);
-		sw_bool_JK_1_dongXiaJi.setEnabled(false);
-		sw_bool_JK_1_zhongXiaoBaoJing.setEnabled(false);
-		sw_bool_JK_1_dianJiaReGaoWen.setEnabled(false);
-		sw_bool_JK_1_fengJiQueFeng.setEnabled(false);
-		sw_bool_JK_1_paiFengJiYiQiDong.setEnabled(false);
-		sw_bool_JK_1_diWenPanGuan.setEnabled(false);
-		sw_bool_JK_1_mieJunYunXing.setEnabled(false);
-		sw_bool_JK_2_fengJiYiQiDong.setEnabled(false);
-		sw_bool_JK_2_zhiBanStatus.setEnabled(false);
-		sw_bool_JK_2_dianJiaRe1.setEnabled(false);
-		sw_bool_JK_2_dianJiaRe2.setEnabled(false);
-		sw_bool_JK_2_dianJiaRe3.setEnabled(false);
-		sw_bool_JK_2_fengJiStatus.setEnabled(false);
-		sw_bool_JK_2_shouZiDong.setEnabled(false);
-		sw_bool_JK_2_dongXiaJi.setEnabled(false);
-		sw_bool_JK_2_zhongXiaoBaoJing.setEnabled(false);
-		sw_bool_JK_2_dianJiaReGaoWen.setEnabled(false);
-		sw_bool_JK_2_fengJiQueFeng.setEnabled(false);
-		sw_bool_JK_2_paiFengJiYiQiDong.setEnabled(false);
-		sw_bool_JK_2_diWenPanGuan.setEnabled(false);
-		sw_bool_JK_2_mieJunYunXing.setEnabled(false);
-		sw_bool_JK_3_fengJiYiQiDong.setEnabled(false);
-		sw_bool_JK_3_zhiBanStatus.setEnabled(false);
-		sw_bool_JK_3_dianJiaRe1.setEnabled(false);
-		sw_bool_JK_3_dianJiaRe2.setEnabled(false);
-		sw_bool_JK_3_dianJiaRe3.setEnabled(false);
-		sw_bool_JK_3_fengJiStatus.setEnabled(false);
-		sw_bool_JK_3_shouZiDong.setEnabled(false);
-		sw_bool_JK_3_dongXiaJi.setEnabled(false);
-		sw_bool_JK_3_zhongXiaoBaoJing.setEnabled(false);
-		sw_bool_JK_3_dianJiaReGaoWen.setEnabled(false);
-		sw_bool_JK_3_fengJiQueFeng.setEnabled(false);
-		sw_bool_JK_3_paiFengJiYiQiDong.setEnabled(false);
-		sw_bool_JK_3_diWenPanGuan.setEnabled(false);
-		sw_bool_JK_3_mieJunYunXing.setEnabled(false);
-		sw_bool_JK_XF_fengJiYiQiDong.setEnabled(false);
-		sw_bool_JK_XF_zhiBanStatus.setEnabled(false);
-		sw_bool_JK_XF_dianJiaRe1.setEnabled(false);
-		sw_bool_JK_XF_dianJiaRe2.setEnabled(false);
-		sw_bool_JK_XF_dianJiaRe3.setEnabled(false);
-		sw_bool_JK_XF_fengJiStatus.setEnabled(false);
-		sw_bool_JK_XF_shouZiDong.setEnabled(false);
-		sw_bool_JK_XF_dongXiaJi.setEnabled(false);
-		sw_bool_JK_XF_zhongXiaoBaoJing.setEnabled(false);
-		sw_bool_JK_XF_dianJiaReGaoWen.setEnabled(false);
-		sw_bool_JK_XF_fengJiQueFeng.setEnabled(false);
-		sw_bool_JK_XF_paiFengJiYiQiDong.setEnabled(false);
-		sw_bool_JK_XF_diWenPanGuan.setEnabled(false);
-		sw_bool_JK_XF_mieJunYunXing.setEnabled(false);
-	
+		ll_overview_JK_1.setOnClickListener(this);
+		ll_overview_JK_2.setOnClickListener(this);
+		ll_overview_JK_3.setOnClickListener(this);
+		ll_overview_JK_XF.setOnClickListener(this);
 	}
 
 	private void initDevice() {
@@ -386,6 +176,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
 
 	@Override
 	protected void onResume() {
+		initDevice();
 		super.onResume();
 		getStatusOfDevice();
 	}
@@ -399,55 +190,39 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
 		mDevice.setListener(null);
 	}
 
+	private void startActivityWithStringAHU(String data){
+
+		Bundle bundle = new Bundle();
+		bundle.putParcelable("GizWifiDevice",mDevice);
+
+		Intent intent = new Intent(GosDeviceControlActivity.this,AhuDeviceDataActivity.class);
+		intent.putExtra("extra_data",data);
+		intent.putExtras(bundle);
+		startActivity(intent);
+	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		default:
-			break;
-		}
-	}
 
-	/*
-	 * ========================================================================
-	 * EditText 点击键盘“完成”按钮方法
-	 * ========================================================================
-	 */
-	@Override
-	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			case R.id.ll_JK_1:
+				startActivityWithStringAHU("JK_1");
+				break;
 
-		switch (v.getId()) {
-		default:
-			break;
-		}
-		hideKeyBoard();
-		return false;
+			case R.id.ll_JK_2:
+				startActivityWithStringAHU("JK_2");
+				break;
 
-	}
-	
-	/*
-	 * ========================================================================
-	 * seekbar 回调方法重写
-	 * ========================================================================
-	 */
-	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		
-		switch (seekBar.getId()) {
-		default:
-			break;
-		}
-	}
+			case R.id.ll_JK_3:
+				startActivityWithStringAHU("JK_3");
+				break;
 
-	@Override
-	public void onStartTrackingTouch(SeekBar seekBar) {
+			case R.id.ll_JK_XF:
+				startActivityWithStringAHU("JK_XF");
+				break;
 
-	}
-
-	@Override
-	public void onStopTrackingTouch(SeekBar seekBar) {
-		switch (seekBar.getId()) {
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 
@@ -493,111 +268,61 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
 	 * Description:根据保存的的数据点的值来更新UI
 	 */
 	protected void updateUI() {
-		
-		sw_bool_JK_1_fengJiYiQiDong.setChecked(data_JK_1_fengJiYiQiDong);
-		sw_bool_JK_1_zhiBanStatus.setChecked(data_JK_1_zhiBanStatus);
-		sw_bool_JK_1_dianJiaRe1.setChecked(data_JK_1_dianJiaRe1);
-		sw_bool_JK_1_dianJiaRe2.setChecked(data_JK_1_dianJiaRe2);
-		sw_bool_JK_1_dianJiaRe3.setChecked(data_JK_1_dianJiaRe3);
-		sw_bool_JK_1_fengJiStatus.setChecked(data_JK_1_fengJiStatus);
-		sw_bool_JK_1_shouZiDong.setChecked(data_JK_1_shouZiDong);
-		sw_bool_JK_1_dongXiaJi.setChecked(data_JK_1_dongXiaJi);
-		sw_bool_JK_1_zhongXiaoBaoJing.setChecked(data_JK_1_zhongXiaoBaoJing);
-		sw_bool_JK_1_dianJiaReGaoWen.setChecked(data_JK_1_dianJiaReGaoWen);
-		sw_bool_JK_1_fengJiQueFeng.setChecked(data_JK_1_fengJiQueFeng);
-		sw_bool_JK_1_paiFengJiYiQiDong.setChecked(data_JK_1_paiFengJiYiQiDong);
-		sw_bool_JK_1_diWenPanGuan.setChecked(data_JK_1_diWenPanGuan);
-		sw_bool_JK_1_mieJunYunXing.setChecked(data_JK_1_mieJunYunXing);
-		sw_bool_JK_2_fengJiYiQiDong.setChecked(data_JK_2_fengJiYiQiDong);
-		sw_bool_JK_2_zhiBanStatus.setChecked(data_JK_2_zhiBanStatus);
-		sw_bool_JK_2_dianJiaRe1.setChecked(data_JK_2_dianJiaRe1);
-		sw_bool_JK_2_dianJiaRe2.setChecked(data_JK_2_dianJiaRe2);
-		sw_bool_JK_2_dianJiaRe3.setChecked(data_JK_2_dianJiaRe3);
-		sw_bool_JK_2_fengJiStatus.setChecked(data_JK_2_fengJiStatus);
-		sw_bool_JK_2_shouZiDong.setChecked(data_JK_2_shouZiDong);
-		sw_bool_JK_2_dongXiaJi.setChecked(data_JK_2_dongXiaJi);
-		sw_bool_JK_2_zhongXiaoBaoJing.setChecked(data_JK_2_zhongXiaoBaoJing);
-		sw_bool_JK_2_dianJiaReGaoWen.setChecked(data_JK_2_dianJiaReGaoWen);
-		sw_bool_JK_2_fengJiQueFeng.setChecked(data_JK_2_fengJiQueFeng);
-		sw_bool_JK_2_paiFengJiYiQiDong.setChecked(data_JK_2_paiFengJiYiQiDong);
-		sw_bool_JK_2_diWenPanGuan.setChecked(data_JK_2_diWenPanGuan);
-		sw_bool_JK_2_mieJunYunXing.setChecked(data_JK_2_mieJunYunXing);
-		sw_bool_JK_3_fengJiYiQiDong.setChecked(data_JK_3_fengJiYiQiDong);
-		sw_bool_JK_3_zhiBanStatus.setChecked(data_JK_3_zhiBanStatus);
-		sw_bool_JK_3_dianJiaRe1.setChecked(data_JK_3_dianJiaRe1);
-		sw_bool_JK_3_dianJiaRe2.setChecked(data_JK_3_dianJiaRe2);
-		sw_bool_JK_3_dianJiaRe3.setChecked(data_JK_3_dianJiaRe3);
-		sw_bool_JK_3_fengJiStatus.setChecked(data_JK_3_fengJiStatus);
-		sw_bool_JK_3_shouZiDong.setChecked(data_JK_3_shouZiDong);
-		sw_bool_JK_3_dongXiaJi.setChecked(data_JK_3_dongXiaJi);
-		sw_bool_JK_3_zhongXiaoBaoJing.setChecked(data_JK_3_zhongXiaoBaoJing);
-		sw_bool_JK_3_dianJiaReGaoWen.setChecked(data_JK_3_dianJiaReGaoWen);
-		sw_bool_JK_3_fengJiQueFeng.setChecked(data_JK_3_fengJiQueFeng);
-		sw_bool_JK_3_paiFengJiYiQiDong.setChecked(data_JK_3_paiFengJiYiQiDong);
-		sw_bool_JK_3_diWenPanGuan.setChecked(data_JK_3_diWenPanGuan);
-		sw_bool_JK_3_mieJunYunXing.setChecked(data_JK_3_mieJunYunXing);
-		sw_bool_JK_XF_fengJiYiQiDong.setChecked(data_JK_XF_fengJiYiQiDong);
-		sw_bool_JK_XF_zhiBanStatus.setChecked(data_JK_XF_zhiBanStatus);
-		sw_bool_JK_XF_dianJiaRe1.setChecked(data_JK_XF_dianJiaRe1);
-		sw_bool_JK_XF_dianJiaRe2.setChecked(data_JK_XF_dianJiaRe2);
-		sw_bool_JK_XF_dianJiaRe3.setChecked(data_JK_XF_dianJiaRe3);
-		sw_bool_JK_XF_fengJiStatus.setChecked(data_JK_XF_fengJiStatus);
-		sw_bool_JK_XF_shouZiDong.setChecked(data_JK_XF_shouZiDong);
-		sw_bool_JK_XF_dongXiaJi.setChecked(data_JK_XF_dongXiaJi);
-		sw_bool_JK_XF_zhongXiaoBaoJing.setChecked(data_JK_XF_zhongXiaoBaoJing);
-		sw_bool_JK_XF_dianJiaReGaoWen.setChecked(data_JK_XF_dianJiaReGaoWen);
-		sw_bool_JK_XF_fengJiQueFeng.setChecked(data_JK_XF_fengJiQueFeng);
-		sw_bool_JK_XF_paiFengJiYiQiDong.setChecked(data_JK_XF_paiFengJiYiQiDong);
-		sw_bool_JK_XF_diWenPanGuan.setChecked(data_JK_XF_diWenPanGuan);
-		sw_bool_JK_XF_mieJunYunXing.setChecked(data_JK_XF_mieJunYunXing);
-		tv_data_JK_1_mianBanTongXunZhuangTai1.setText(data_JK_1_mianBanTongXunZhuangTai1+"");
-		tv_data_JK_1_mianBanTongXunZhuangTai2.setText(data_JK_1_mianBanTongXunZhuangTai2+"");
-		tv_data_JK_1_mianBanTongXunZhuangTai3.setText(data_JK_1_mianBanTongXunZhuangTai3+"");
-		tv_data_JK_2_mianBanTongXunZhuangTai1.setText(data_JK_2_mianBanTongXunZhuangTai1+"");
-		tv_data_JK_2_mianBanTongXunZhuangTai2.setText(data_JK_2_mianBanTongXunZhuangTai2+"");
-		tv_data_JK_2_mianBanTongXunZhuangTai3.setText(data_JK_2_mianBanTongXunZhuangTai3+"");
-		tv_data_JK_3_mianBanTongXunZhuangTai1.setText(data_JK_3_mianBanTongXunZhuangTai1+"");
-		tv_data_JK_3_mianBanTongXunZhuangTai2.setText(data_JK_3_mianBanTongXunZhuangTai2+"");
-		tv_data_JK_3_mianBanTongXunZhuangTai3.setText(data_JK_3_mianBanTongXunZhuangTai3+"");
-		tv_data_JK_XF_mianBanTongXunZhuangTai1.setText(data_JK_XF_mianBanTongXunZhuangTai1+"");
-		tv_data_JK_XF_mianBanTongXunZhuangTai2.setText(data_JK_XF_mianBanTongXunZhuangTai2+"");
-		tv_data_JK_XF_mianBanTongXunZhuangTai3.setText(data_JK_XF_mianBanTongXunZhuangTai3+"");
-		tv_data_JK_1_tempReal.setText(data_JK_1_tempReal+"");
-		tv_data_JK_1_humiReal.setText(data_JK_1_humiReal+"");
-		tv_data_JK_1_tempSet.setText(data_JK_1_tempSet+"");
-		tv_data_JK_1_humiSet.setText(data_JK_1_humiSet+"");
-		tv_data_JK_1_lengShuiFaKaiDu.setText(data_JK_1_lengShuiFaKaiDu+"");
-		tv_data_JK_1_reShuiFaKaiDu.setText(data_JK_1_reShuiFaKaiDu+"");
-		tv_data_JK_1_xinFengWenDU.setText(data_JK_1_xinFengWenDU+"");
-		tv_data_JK_1_jiaShiQIKaiDu.setText(data_JK_1_jiaShiQIKaiDu+"");
-		tv_data_JK_1_beiYong.setText(data_JK_1_beiYong+"");
-		tv_data_JK_2_tempReal.setText(data_JK_2_tempReal+"");
-		tv_data_JK_2_humiReal.setText(data_JK_2_humiReal+"");
-		tv_data_JK_2_tempSet.setText(data_JK_2_tempSet+"");
-		tv_data_JK_2_humiSet.setText(data_JK_2_humiSet+"");
-		tv_data_JK_2_lengShuiFaKaiDu.setText(data_JK_2_lengShuiFaKaiDu+"");
-		tv_data_JK_2_reShuiFaKaiDu.setText(data_JK_2_reShuiFaKaiDu+"");
-		tv_data_JK_2_xinFengWenDU.setText(data_JK_2_xinFengWenDU+"");
-		tv_data_JK_2_jiaShiQIKaiDu.setText(data_JK_2_jiaShiQIKaiDu+"");
-		tv_data_JK_2_beiYong.setText(data_JK_2_beiYong+"");
-		tv_data_JK_3_tempReal.setText(data_JK_3_tempReal+"");
-		tv_data_JK_3_humiReal.setText(data_JK_3_humiReal+"");
-		tv_data_JK_3_tempSet.setText(data_JK_3_tempSet+"");
-		tv_data_JK_3_humiSet.setText(data_JK_3_humiSet+"");
-		tv_data_JK_3_lengShuiFaKaiDu.setText(data_JK_3_lengShuiFaKaiDu+"");
-		tv_data_JK_3_reShuiFaKaiDu.setText(data_JK_3_reShuiFaKaiDu+"");
-		tv_data_JK_3_xinFengWenDU.setText(data_JK_3_xinFengWenDU+"");
-		tv_data_JK_3_jiaShiQIKaiDu.setText(data_JK_3_jiaShiQIKaiDu+"");
-		tv_data_JK_3_beiYong.setText(data_JK_3_beiYong+"");
-		tv_data_JK_XF_tempReal.setText(data_JK_XF_tempReal+"");
-		tv_data_JK_XF_humiReal.setText(data_JK_XF_humiReal+"");
-		tv_data_JK_XF_tempSet.setText(data_JK_XF_tempSet+"");
-		tv_data_JK_XF_humiSet.setText(data_JK_XF_humiSet+"");
-		tv_data_JK_XF_lengShuiFaKaiDu.setText(data_JK_XF_lengShuiFaKaiDu+"");
-		tv_data_JK_XF_reShuiFaKaiDu.setText(data_JK_XF_reShuiFaKaiDu+"");
-		tv_data_JK_XF_xinFengWenDU.setText(data_JK_XF_xinFengWenDU+"");
-		tv_data_JK_XF_jiaShiQIKaiDu.setText(data_JK_XF_jiaShiQIKaiDu+"");
-		tv_data_JK_XF_beiYong.setText(data_JK_XF_beiYong+"");
+
+
+
+		if (data_JK_1_fengJiQueFeng){
+			tv_data_JK_1_title.setBackgroundColor(Color.RED);
+		}else if (data_JK_1_fengJiStatus){
+			tv_data_JK_1_title.setBackgroundColor(Color.GREEN);
+		}else {
+			tv_data_JK_1_title.setBackgroundColor(Color.GRAY);
+		}
+
+		if (data_JK_2_fengJiQueFeng){
+			tv_data_JK_2_title.setBackgroundColor(Color.RED);
+		}else if (data_JK_2_fengJiStatus){
+			tv_data_JK_2_title.setBackgroundColor(Color.GREEN);
+		}else {
+			tv_data_JK_2_title.setBackgroundColor(Color.GRAY);
+		}
+
+		if (data_JK_3_fengJiQueFeng){
+			tv_data_JK_3_title.setBackgroundColor(Color.RED);
+		}else if (data_JK_3_fengJiStatus){
+			tv_data_JK_3_title.setBackgroundColor(Color.GREEN);
+		}else {
+			tv_data_JK_3_title.setBackgroundColor(Color.GRAY);
+		}
+
+		if (data_JK_XF_fengJiQueFeng){
+			tv_data_JK_XF_title.setBackgroundColor(Color.RED);
+		}else if (data_JK_XF_fengJiStatus){
+			tv_data_JK_XF_title.setBackgroundColor(Color.GREEN);
+		}else {
+			tv_data_JK_XF_title.setBackgroundColor(Color.GRAY);
+		}
+
+
+		tv_data_JK_1_tempReal.setText(formatValue(data_JK_1_tempReal/10.0,0.1)+" ℃");
+		tv_data_JK_1_humiReal.setText(formatValue(data_JK_1_humiReal/10.0,0.1)+" RH");
+		tv_data_JK_1_tempSet.setText(formatValue(data_JK_1_tempSet/10.0,0.1)+" ℃");
+		tv_data_JK_1_humiSet.setText(formatValue(data_JK_1_humiSet/10.0,0.1)+" RH");
+
+		tv_data_JK_2_tempReal.setText(formatValue(data_JK_2_tempReal/10.0,0.1)+" ℃");
+		tv_data_JK_2_humiReal.setText(formatValue(data_JK_2_humiReal/10.0,0.1)+" RH");
+		tv_data_JK_2_tempSet.setText(formatValue(data_JK_2_tempSet/10.0,0.1)+" ℃");
+		tv_data_JK_2_humiSet.setText(formatValue(data_JK_2_humiSet/10.0,0.1)+" RH");
+
+		tv_data_JK_3_tempReal.setText(formatValue(data_JK_3_tempReal/10.0,0.1)+" ℃");
+		tv_data_JK_3_humiReal.setText(formatValue(data_JK_3_humiReal/10.0,0.1)+" RH");
+		tv_data_JK_3_tempSet.setText(formatValue(data_JK_3_tempSet/10.0,0.1)+" ℃");
+		tv_data_JK_3_humiSet.setText(formatValue(data_JK_3_humiSet/10.0,0.1)+" RH");
+
+		tv_data_JK_XF_tempReal.setText(formatValue(data_JK_XF_tempReal/10.0,0.1)+" ℃");
+		tv_data_JK_XF_humiReal.setText(formatValue(data_JK_XF_humiReal/10.0,0.1)+" RH");
+		tv_data_JK_XF_tempSet.setText(formatValue(data_JK_XF_tempSet/10.0,0.1)+" ℃");
+		tv_data_JK_XF_humiSet.setText(formatValue(data_JK_XF_humiSet/10.0,0.1)+" RH");
 	
 	}
 
